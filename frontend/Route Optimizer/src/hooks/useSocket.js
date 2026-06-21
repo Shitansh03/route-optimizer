@@ -1,12 +1,13 @@
 import { useEffect, useRef, useCallback } from 'react'
 import { io } from 'socket.io-client'
 
-let socket = null   // Singleton socket instance
+let socket = null
 
 export function useSocket() {
 
   if (!socket) {
-    socket = io('http://localhost:5000', {
+    const socketUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+    socket = io(socketUrl, {
       transports: ['websocket'],
       autoConnect: true,
     })
